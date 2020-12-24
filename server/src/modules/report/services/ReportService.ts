@@ -75,7 +75,7 @@ export default class ReportService {
   }
 
   public async filter(filter: Filter): Promise<Paginate> {
-    const { page = 1, size = 10 } = filter
+    const { page = 1, size = 100 } = filter
     const filteredData = await this.query(data, filter)
     const result = this.paginate(filteredData, page, size)
     return result;

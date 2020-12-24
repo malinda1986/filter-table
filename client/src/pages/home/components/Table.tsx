@@ -6,7 +6,15 @@ import { Table, notification ,Tag} from 'antd';
 import Filter from "./Filter"
 
 import apiService from "../../../utils";
-
+const itemRender = (current, type, originalElement) => {
+  if (type === 'prev') {
+    return <a>Previous</a>;
+  }
+  if (type === 'next') {
+    return <a>Next</a>;
+  }
+  return originalElement;
+}
 const TableView: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isFetching, seIsFetching] = useState<boolean>(true);
@@ -14,10 +22,14 @@ const TableView: React.FC = () => {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 10,
+    pageSize: 100,
     showSizeChanger: true,
     total: 0,
-    responsive: true,
+    pageSizeOptions: ["100", "200", "500"],
+    size:"small",
+    //responsive: true,
+    //position: "both",
+    //showLessItems: true
   });
 
   const formRef = createRef<any>()
@@ -92,7 +104,7 @@ const TableView: React.FC = () => {
     const sortOrder = sorter.order
     handleSubmit(pagination, {sortField, sortOrder}, filters)    
   };
-  
+ 
   const columns = [
     {
       title: 'Bank Name',
@@ -144,6 +156,7 @@ const TableView: React.FC = () => {
               dataSource={data}
               pagination={pagination}
               loading={loading}
+              
               onChange={handleTableChange}
           />
     </div>
